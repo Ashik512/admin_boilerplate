@@ -127,14 +127,10 @@ const CustomDrawer = () => {
         // // onSelect={_onSelect}
         // openKeys={openKeys}
         // onOpenChange={_onOpenChange}
-        // style={{backgroundColor: '#f8f9fd'}}
+        style={{backgroundColor: '#f8f9fd'}}
         mode="inline"
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}
-        style={{
-          height: '100%',
-          borderRight: 0,
-        }}
         items={items2}
       />
     </Layout.Sider>
