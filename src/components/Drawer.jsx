@@ -4,7 +4,13 @@ import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 
 // import icons
-import { DownSquareOutlined, HomeOutlined, LaptopOutlined, LeftOutlined, NotificationOutlined, PicLeftOutlined, StepBackwardOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  LaptopOutlined,
+  LeftOutlined,
+  NotificationOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 
 // import action
 // import { tranformIntoMenuList } from '../services/actions/menuAction'
@@ -21,14 +27,25 @@ const CustomDrawer = () => {
   const [openKeys, setOpenKeys] = useState(['employees']);
   const [rootSubmenuKeys, setRootSubmenuKeys] = useState([]);
 
-
   const items1 = ['1', '2', '3'].map((key) => ({
     key,
     label: `nav ${key}`,
   }));
 
-  const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
+  const items2 = [
+    HomeOutlined,
+    UserOutlined,
+    LaptopOutlined,
+    NotificationOutlined,
+  ].map((icon, index) => {
     const key = String(index + 1);
+    if (index === 0) {
+      return {
+        key: `sub${key}`,
+        icon: React.createElement(icon),
+        label: 'DASHBOARD',
+      };
+    }
     return {
       key: `sub${key}`,
       icon: React.createElement(icon),
@@ -42,7 +59,6 @@ const CustomDrawer = () => {
       }),
     };
   });
- 
 
   // distruct menuList from auth redux toolkit
   // const { menuList, selectedMenuItemKey } = useSelector((state) => state.auth)
@@ -127,7 +143,7 @@ const CustomDrawer = () => {
         // // onSelect={_onSelect}
         // openKeys={openKeys}
         // onOpenChange={_onOpenChange}
-        style={{backgroundColor: '#f8f9fd'}}
+        style={{ backgroundColor: '#f8f9fd' }}
         mode="inline"
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}

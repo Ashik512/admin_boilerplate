@@ -17,7 +17,7 @@ function Navbar() {
         height: '48px',
       }}
     >
-      <div className={'fixed w-full z-20'} style={{backgroundColor: '#f8f9fd'}}>
+      <div className={'fixed w-full z-20 shadow-sm'} style={{backgroundColor: '#f8f9fd'}}>
         <div className={'flex justify-between items-center px-5'}>
           <Link to={'/'}>
             {/* <Image
@@ -27,7 +27,7 @@ function Navbar() {
               width={'10rem'}
               style={{ padding: '2px' }}
             /> */}
-            <h1 style={{ padding: '5px' }}>RMS</h1>
+            <h1 style={{ padding: '5px' }}><i>RMS</i></h1>
           </Link>
           <NavbarOptions />
         </div>

@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.ant-layout-sider-trigger {
+  background: lightseagreen !important;
+}
+
+.ant-menu-item-selected {
+	background-color:  #6fd943 !important;
+	color: white !important;
+}
+
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen', 'Ubuntu',

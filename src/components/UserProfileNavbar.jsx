@@ -26,7 +26,7 @@ function UserProfileNavbar() {
 			>
 				<Avatar
 					style={{
-						color: 'black',
+						color: 'white',
             cursor: 'pointer'
 					}}
 					icon={<UserOutlined />}
