@@ -1,153 +1,125 @@
 import React, { useState } from 'react';
-
 // import components
-import { Layout, Menu } from 'antd';
-
-// import icons
 import {
+  AlipayOutlined,
+  AlipaySquareFilled,
+  AppstoreOutlined,
   HomeOutlined,
-  LaptopOutlined,
-  LeftOutlined,
-  NotificationOutlined,
+  PlayCircleOutlined,
+  PlusSquareFilled,
+  QuestionOutlined,
+  SettingOutlined,
+  SettingTwoTone,
+  SubnodeOutlined,
+  ToTopOutlined,
+  UserAddOutlined,
   UserOutlined,
+  UserSwitchOutlined,
 } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-// import action
-// import { tranformIntoMenuList } from '../services/actions/menuAction'
-// import { setSelectedMenuItemKey } from '../services/reducers/authReducer'
+// creating menu items
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
 
-// import release version
-// import { RELEASE_VERSION } from '../config'
+// menu items
+const items = [
+  getItem('DASHBOARD', '', <HomeOutlined />),
+  getItem('User Management', 'user-management', <UserOutlined />, [
+    getItem('User Type', 'user-type', <UserSwitchOutlined />),
+    getItem('User', 'user', <UserAddOutlined />),
+  ]),
+  getItem('Role Management', 'sub2', <AppstoreOutlined />, [
+    getItem('Role', 'role', <PlayCircleOutlined />),
+    getItem('Role Details', 'role-details', <PlusSquareFilled />),
+  ]),
+  getItem('Configurations', 'sub4', <SettingOutlined />, [
+    getItem('Subject', 'subject', <SubnodeOutlined />),
+    getItem('Topic', 'topic', <ToTopOutlined />),
+  ]),
+  getItem('Question', 'question', <QuestionOutlined />),
+  getItem('Assesment Management', 'assesment-management', <AlipayOutlined />, [
+    getItem('Assesment', 'assesment', <AlipaySquareFilled />),
+    getItem('Assesment Settings', 'assesment-settings', <SettingTwoTone />),
+  ]),
+];
+
+// submenu keys of first level
+const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 
 // component
-const CustomDrawer = () => {
+const CustomDrawer = ({ collapsed }) => {
   // drawer state
-  const [collapsed, setCollapsed] = useState(false);
-  const [items, setItems] = useState([]);
-  const [openKeys, setOpenKeys] = useState(['employees']);
-  const [rootSubmenuKeys, setRootSubmenuKeys] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
+  const navigate = useNavigate();
 
-  const items1 = ['1', '2', '3'].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
-
-  const items2 = [
-    HomeOutlined,
-    UserOutlined,
-    LaptopOutlined,
-    NotificationOutlined,
-  ].map((icon, index) => {
-    const key = String(index + 1);
-    if (index === 0) {
-      return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: 'DASHBOARD',
-      };
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
-  });
+  };
 
-  // distruct menuList from auth redux toolkit
-  // const { menuList, selectedMenuItemKey } = useSelector((state) => state.auth)
+  // function for navigate
+  const onSelect = ({ key, selectedKeys }) => {
+    console.log({ key, selectedKeys });
 
-  //navigate hook
-  // const navigate = useNavigate()
-  // const dispatch = useDispatch()
+    // set selected item key to redux
+    // dispatch(setSelectedMenuItemKey(selectedKeys))
 
-  // init life cycle, set root sub menu keys
-  // useEffect(() => {
-  // 	// format the menuList
-  // 	const _items = tranformIntoMenuList(menuList)
-  // 	setItems(_items)
-
-  // 	const _rootSubmenuKeys = _items?.length > 0 && _items.map((item) => item?.key)
-
-  // 	setRootSubmenuKeys(_rootSubmenuKeys)
-  // }, [menuList])
-
-  // // function for navigate
-  // const _onSelect = ({ key, selectedKeys }) => {
-  // 	// set selected item key to redux
-  // 	dispatch(setSelectedMenuItemKey(selectedKeys))
-
-  // 	// navigate keypath
-  // 	navigate(key)
-  // }
-
-  // // handle on open change
-  // const _onOpenChange = (keys) => {
-  //   console.log({keys});
-  // 	// const latestOpenKey = keys?.length && keys.find((key) => openKeys?.indexOf(key) === -1)
-
-  // 	// if (rootSubmenuKeys && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-  // 	// 	setOpenKeys(keys)
-  // 	// } else {
-  // 	// 	setOpenKeys(latestOpenKey ? [latestOpenKey] : [])
-  // 	// }
-  // }
+    // navigate keypath
+    // navigate(`/${key}`);
+  };
 
   return (
     <Layout.Sider
-      breakpoint={'xl'}
-      onBreakpoint={(isOnBreakpoint) => setCollapsed(isOnBreakpoint)}
       collapsible
       collapsed={collapsed}
-      onCollapse={(value) => setCollapsed(value)}
-      width={240}
+      width={255}
       style={{
-        height: 'calc(100vh - 96px)',
-        position: 'sticky',
-        top: 48,
         overflow: 'auto',
-        background: '#f8f9fd',
+        height: '100vh',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        transition: '.4s',
+        background: '#ffffff',
       }}
-      // className={'shadow'}
-      trigger={
-        true && (
-          <div className={'px-2 relative flex justify-start items-center'}>
-            <div>{'v1.1.0'}</div>
-            <div
-              className={`absolute top-0.5 ${
-                collapsed ? 'right-2' : 'left-1/2 bottom-1'
-              }`}
-            >
-              <LeftOutlined
-                className={
-                  collapsed && 'rotate-180 transition-all duration-400'
-                }
-              />
-            </div>
-          </div>
-        )
-      }
+      className={'shadow-lg'}
+      trigger={null}
     >
+      <div className="logo text-center">
+        <h1
+          style={
+            collapsed
+              ? { marginTop: '15px', width: '100%', transition: '.4s' }
+              : { marginTop: '15px', width: '80%', transition: '.4s' }
+          }
+        >
+          RMS
+        </h1>
+        <hr style={{ opacity: 0.2 }} />
+      </div>
       <Menu
-        // theme={'dark'}
-        // selectedKeys={selectedMenuItemKey}
-        // mode={'inline'}
-        // items={menus}
-        // triggerSubMenuAction={'click'}
-        // // onSelect={_onSelect}
-        // openKeys={openKeys}
-        // onOpenChange={_onOpenChange}
-        style={{ backgroundColor: '#f8f9fd' }}
         mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        items={items2}
+        theme="light"
+        // selectedKeys={selectedMenuItemKey}
+        onSelect={onSelect}
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        items={items}
+        triggerSubMenuAction={'click'}
       />
     </Layout.Sider>
   );

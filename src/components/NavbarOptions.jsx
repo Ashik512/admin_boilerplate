@@ -9,7 +9,7 @@ const NavbarOptions = () => {
 		<div>
 			<Space>
 				{/* <Notifications /> */}
-        <BellOutlined style={{fontSize: '27px'}}/>
+        <BellOutlined className='text-lg'/>
 				<UserProfileNavbar />
 			</Space>
 		</div>

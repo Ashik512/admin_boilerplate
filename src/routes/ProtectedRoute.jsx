@@ -1,12 +1,10 @@
-// import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom';
 
 // import components
 import { Layout } from 'antd';
+import { Footer } from 'antd/es/layout/layout';
+import { useState } from 'react';
 import { CustomDrawer, Navbar } from '../components';
-// import { Footer } from 'antd/es/layout/layout';
-// import { Spinner } from '../components/layout'
-// import cookies from '../services/actions/authHelpers/cookies'
 
 const ProtectedRoute = () => {
   // rudux state
@@ -25,16 +23,37 @@ const ProtectedRoute = () => {
   // }
 
   // if (isAuthenticated && token && !isAuthValidating) {
+
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <Layout>
-      <Navbar />
+    <Layout
+      style={{
+        minHeight: '100vh',
+        marginLeft: collapsed ? 80 : 255,
+        transition: '.4s',
+      }}
+    >
+      <CustomDrawer collapsed={collapsed} />
       <Layout>
-        <CustomDrawer />
-        <Layout.Content>
-          <div className={'h-[calc(100%)] bg-blue-50/40'}>
-            <Outlet />
-          </div>
+        <Navbar
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+        />
+        <Layout.Content
+          style={{
+            margin: true ? '1em' : '1em 1em 1em 2em',
+          }}
+        >
+          <Outlet />
         </Layout.Content>
+        <Footer
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          RMS ©2023 Created by TechnoNext
+        </Footer>
       </Layout>
     </Layout>
   );
