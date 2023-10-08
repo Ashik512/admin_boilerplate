@@ -37,13 +37,13 @@ const items = [
     getItem('User Type', 'user-type', <UserSwitchOutlined />),
     getItem('User', 'user', <UserAddOutlined />),
   ]),
-  getItem('Role Management', 'sub2', <AppstoreOutlined />, [
+  getItem('Role Management', 'role-management', <AppstoreOutlined />, [
     getItem('Role', 'role', <PlayCircleOutlined />),
     getItem('Role Details', 'role-details', <PlusSquareFilled />),
   ]),
-  getItem('Configurations', 'sub4', <SettingOutlined />, [
-    getItem('Subject', 'subject', <SubnodeOutlined />),
-    getItem('Topic', 'topic', <ToTopOutlined />),
+  getItem('Configurations', 'configurations', <SettingOutlined />, [
+    getItem('Subject', 'subjects', <SubnodeOutlined />),
+    getItem('Topic', 'topics', <ToTopOutlined />),
   ]),
   getItem('Question', 'question', <QuestionOutlined />),
   getItem('Assesment Management', 'assesment-management', <AlipayOutlined />, [
@@ -53,7 +53,7 @@ const items = [
 ];
 
 // submenu keys of first level
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+const rootSubmenuKeys = ['user-management', 'role-management', 'configurations','assesment-management'];
 
 // component
 const CustomDrawer = ({ collapsed }) => {
@@ -71,21 +71,21 @@ const CustomDrawer = ({ collapsed }) => {
   };
 
   // function for navigate
-  const onSelect = ({ key, selectedKeys }) => {
+  const onClick = ({ key, selectedKeys }) => {
     console.log({ key, selectedKeys });
 
     // set selected item key to redux
     // dispatch(setSelectedMenuItemKey(selectedKeys))
 
     // navigate keypath
-    // navigate(`/${key}`);
+    navigate(`/${key}`);
   };
 
   return (
     <Layout.Sider
       collapsible
       collapsed={collapsed}
-      width={255}
+      width={280}
       style={{
         overflow: 'auto',
         height: '100vh',
@@ -94,7 +94,7 @@ const CustomDrawer = ({ collapsed }) => {
         top: 0,
         bottom: 0,
         transition: '.4s',
-        background: '#ffffff',
+        background: '#FFFFFF',
       }}
       className={'shadow-lg'}
       trigger={null}
@@ -115,7 +115,7 @@ const CustomDrawer = ({ collapsed }) => {
         mode="inline"
         theme="light"
         // selectedKeys={selectedMenuItemKey}
-        onSelect={onSelect}
+        onClick={onClick}
         openKeys={openKeys}
         onOpenChange={onOpenChange}
         items={items}

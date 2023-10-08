@@ -23,7 +23,7 @@ function Navbar({ collapsed, setCollapsed }) {
       }}
       className='shadow-md'
     >
-      {React.createElement(true ? MenuUnfoldOutlined : MenuFoldOutlined, {
+      {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: 'trigger',
         onClick: () => setCollapsed(!collapsed),
       })}

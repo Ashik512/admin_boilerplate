@@ -30,7 +30,7 @@ const ProtectedRoute = () => {
     <Layout
       style={{
         minHeight: '100vh',
-        marginLeft: collapsed ? 80 : 255,
+        marginLeft: collapsed ? 80 : 280,
         transition: '.4s',
       }}
     >
